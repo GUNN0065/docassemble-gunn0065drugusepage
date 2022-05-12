@@ -1,0 +1,44 @@
+# The purpose of this application is to cycle through a
+# list of dictionaries. These dictionaries contain the name
+# of a lawyer, as well as another list describing the services
+# they provide. The application should print out every lawyer 
+# who matches.
+variable name: listOfLawyers
+use objects: True
+data:
+  - name: John Smith
+    services:
+      - Family Law
+      - Estates
+      - Civil Litigation
+  - name: Martha Long
+    services:
+      - Criminal Law
+  - name: John Scully
+    services:
+      - Estates
+      - Criminal Law
+---
+question: Legal Services Application
+mandatory: True
+subquestion: |
+  You have selected the following services:
+  
+  ${legalServices}
+  
+  The following lawyers offer these services:
+  
+  %for Lawyer in listOfLawyers:
+  - ${ lawyer[name] } specialises in ${ lawyer[services] }
+  %endfor
+---
+question: What legal services do you need?
+fields:
+  - no label: legalServices
+    datatype: checkboxes
+    choices:
+      - Criminal Law
+      - Family Law
+      - Estates
+      - Civil Litigation
+--- 

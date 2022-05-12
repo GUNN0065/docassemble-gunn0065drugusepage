@@ -1,0 +1,32 @@
+# This application is designed to count the costs of filing
+# documents for a minor court matter in South Australia.
+# The application checks to see what is entered by the user, and then
+# calculates a value.
+
+mandatory: True
+question: |
+  Enter the price of each document
+fields:
+  - File minor civil action: file_civil_action
+    datatype: currency
+  - Service of claim on respondent: service_fee
+    datatype: currency
+  - Savings from filing online: file_online
+    datatype: currency
+---
+mandatory: True
+code: |
+  total_cost = 0.0
+---
+mandatory: True
+code: |
+  total_cost = total_cost + total_filing_fee
+  total_cost = total_cost + service_fee
+---
+code: |
+    total_filing_fee = file_civil_action - file_online
+---
+mandatory: True
+question: |
+  Total cost of filing is ${ currency(total_cost)}
+---

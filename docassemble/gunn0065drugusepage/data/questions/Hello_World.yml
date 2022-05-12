@@ -1,0 +1,13 @@
+---
+# Comments start with a hash charater and are not read by the program
+#To force a block to run use mandatory true
+Mandatory: True
+Question: Hello World!
+#only question blocks have question tags#
+# #verticle pipe tells docassemble to display everything until the end of the block
+subquestion: |
+  Hello Mark, 
+  
+  Welcome to Docassemble
+---
+

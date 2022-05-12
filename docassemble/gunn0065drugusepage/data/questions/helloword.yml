@@ -1,0 +1,47 @@
+mandatory: true
+question: What is the meaning of this?
+subquestion: |
+  I am playing around with this programming business to see what I can do with it
+  It is very fun
+  
+  you need to use two lines for a linebreak 
+  otherwise it will look like this
+  you can make text *bold* **italics** 
+  
+  #or very big
+  
+  my name is **${ MGsalutation + ' ' + MGfirstname + ' ' + MGlastname},  
+  
+  - It
+  - Is
+  - Pretty Cool
+  - ${ MGfood } 
+  
+    Column1|Column2
+  -------|-------
+  Salutation|${ MGsalutation }
+  First Name|${ MGfirstname }
+  Last Name|${ MGlastname }
+buttons:
+  - Finish him: exit
+    url: https://library.flinders.edu.au/
+  - Av a laff: exit
+    url: https://i.ytimg.com/vi/UKeI9bdB6Qg/maxresdefault.jpg
+  - Do it again: Restart
+---
+question: Name
+fields:
+  - salutation: MGSalutation
+    choices: 
+      - Dr
+      - Mr
+      - Ms
+      - Mrs
+      - Miss
+      - MX 
+  - first name: MGfirstname
+  - last name: MGlastname
+---
+  
+      
+  

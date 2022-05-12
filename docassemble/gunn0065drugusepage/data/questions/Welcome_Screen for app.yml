@@ -1,0 +1,181 @@
+#design applications around a single mandatory code block which drives the application
+---
+mandatory: True
+code: |
+  MGdisplay_welcome_screen
+  MGdisplay_disclaimer_screen
+  
+  #Threshhold requirements and checking if disability questions have been           answered
+  if MGage_ok and MGis_resident and MGis_citizen:
+    #we're here because the threshhold questions were met
+    MGASD_diagnosed
+    
+    #Ask the eligibility questions
+    if MGDQ1.any_true():
+      if MGDQ2 == 'there is no treatment to improve my impairment':
+        MGeligible_endpoint_1
+      elif MGDQ2 == 'my impairment may improve over time':
+        MGineligible_endpoint_1
+      elif  MGDQ2 == "I don't know":
+        MGineligible_endpoint_2
+      else:
+        pass
+    else: 
+      MGineligible_endpoint_1
+  else:
+    MGthreshhold_not_met
+---
+question: Welcome
+subquestion: |
+  Welcome to the Housing Choices South Australia anti-social behaviour tool
+continue button field: MGdisplay_welcome_screen
+---
+code: |
+  MGdisplay_disclaimer_screen = True
+  force_ask('MGdisclaimer_screen')
+---
+event: MGdisclaimer_screen
+question: Disclaimer
+subquestion: |
+  This is not legal advice blah blah blah
+buttons:
+  - I accept these terms: continue
+  - I do not accept these terms: exit
+---
+#age requirements
+question: What is your age
+fields:
+  - Age: MGage
+    datatype: integer
+    default: 30
+---
+# This code block works out MJFage_ok
+code: |
+  if 7 <= MGage <= 65:
+    MGage_ok = True
+  else:
+    MGage_ok = False
+---
+#Residency threshhold question
+question: Are you currently residing in Australia?
+yesno: MGis_resident
+---
+#citizenship question
+question: Citizenship
+subquestion: |
+  are you either a:
+  
+  - an Australian citizen
+  - a holder of a permanent residency visa; or
+  - a holder of a special cateogory visa
+fields:
+  - no label: MGis_citizen
+    datatype: yesnoradio
+    default: true
+---
+event: MGthreshhold_not_met
+question: ineligible
+subquestion: |
+  You are not eligible to run this applcation because you have indicated that you are     either blah blah:
+  
+  - not blah blah
+  - not blah blah
+  - or not blah blah
+  
+  Some text to direct to ABC website
+buttons:
+  - Exit: exit
+  - Restart: restart
+---
+question: ASD Diagnosis
+fields:
+  - Have you been diagnosed with ASD?: MGASD_diagnosed
+    datatype: yesnoradio
+  - Who diagnosed you?: MGwho_diagnosed_you
+    datatype: checkboxes
+    choices:
+      - Multi
+      - Pedo
+      - Shrink doctor
+    show if:
+      variable: MGASD_diagnosed
+      is: True
+  - What level was your ASD diagnosis: MGASD_level
+    datatype: radio
+    choices:
+      - level 1
+      - level 2
+      - level 3
+    show if:
+      variable: MGASD_diagnosed
+      is: True
+---
+question: Do you have trouble with any of the following?
+fields:
+ - no label: MGDQ1
+   datatype: checkboxes
+   choices:
+     - I have trouble participating in sports
+     - I have difficulty performing voluntary work
+     - I have difficulty travelling
+     - I have trouble engaging in social activities
+---
+event: MGineligible_endpoint_1
+question: You are not eligible
+subquestion: |
+  In order to be eligible for the NDIS your disability must impair your daily life
+buttons:
+  - Exit: exit
+  - Try again: restart
+---
+#good example block for the master issues page
+question: How permanent is your disability?
+fields:
+  - no label: MGDQ2
+    datatype: radio
+    choices:
+      - there is no treatment to improve my impairment
+      - my impairment may improve over time
+      - "I don't know"
+---
+event: MGeligible_endpoint_1
+question: You are eligible
+subquestion: |
+  You may be eligible to apply for the NDIS
+  
+  Questions we asked|Your answers
+  ---|---
+  Your age:|${MGage}
+  Your residency status|${MGis_resident}
+  Your citizenship status|${MGis_citizen}
+  %if MGASD_diagnosed:
+  ASD Diagnosis|You have been diagnosed with ASD
+  Who diagnosed you?|${MGwho_diagnosed_you.true_values()}
+  Level diagnosed|${MGASD_level}
+  %else: 
+  ASD Diagnosis|You have not been diagnosed with ASD
+  %endif
+  Difficulty with daily activities|${MGDQ1.true_values()}
+  Permanence of disability|${MGDQ2}
+buttons:
+  - Exit: exit
+  - Restart: restart
+---
+event: MGineligible_endpoint_2
+question: you are not eligible
+subquestion: |
+  You are not eligible as your disability is not permanent
+buttons:
+  - Exit: exit
+  - Restart: restart
+---
+event: MGineligible_endpoint_3
+question: you may not be eligible
+subquestion: |
+  You would only be eligible if your disability was permanent
+  
+  Contact ABC bla blah
+buttons:
+  - Exit: exit
+  - Restart: restart
+---

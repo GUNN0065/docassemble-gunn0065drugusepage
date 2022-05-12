@@ -1,0 +1,14 @@
+---
+# My first Docassemble program
+mandatory: True
+question: Hello World!
+subquestion: |
+  Hello **${ MGdateOfFiling }**
+
+  Welcome to Docassemble!
+
+question: Please enter the date of filing
+fields:
+  - no label: dateOfFiling
+    datatype: date
+---

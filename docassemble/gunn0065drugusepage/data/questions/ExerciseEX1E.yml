@@ -1,0 +1,79 @@
+---
+mandatory: True
+question: Age eligibility
+subquestion: |
+
+  Hello ${ MGsalutation + ' ' + MGfirstname + ' ' + MGlastname }
+  
+  You are
+  % if MGage_ok:
+    **you are an adult**
+  % else:
+    **you are a senior**
+  % if MG_child:
+    **because you are just a child**
+  % endif
+  % endif  
+  and
+  %if MGemployed == 'Yes':
+  % if MGincome_ok:
+    **your income is ${ currency (MGincome)}**
+  % endif
+  % else:
+    you do not have an income
+  % endif
+
+#every if needs an endif  
+buttons:
+  - exit: exit
+  - restart: restart
+---
+code: |
+  MG_child = False
+  if ( (MGage < 18) ):
+    MG_child = True
+    MGage_ok = False
+  elif ( (MGage >= 18) and
+       (MGage < 65) ):
+    MGage_ok = False
+  else:
+    MGage_ok = True
+---
+code: |
+  if ( (MGincome > 0) ):
+    MGincome_ok = True
+  else:
+    MGincome_ok = False
+---
+question: Name
+fields:
+  - Salutation: MGsalutation
+    choices:
+      - Mr
+      - Mrs
+      - Dr
+      - MX
+  - First Name: MGfirstname
+  - Last Name: MGlastname
+---
+question: What is your age?
+fields:
+ - no label: MGage
+   datatype: integer
+---
+question: Income and Relationship status 
+fields: 
+  - Are you employed?: MGemployed
+    datatype: radio
+    choices:
+      - Yes
+      - No
+  - What is your {income}?: MGincome
+    datatype: currency
+    show if:
+      variable: MGemployed
+      is: 'Yes'
+terms:
+  income: |
+    Testing testing 1, 2... 3.
+---

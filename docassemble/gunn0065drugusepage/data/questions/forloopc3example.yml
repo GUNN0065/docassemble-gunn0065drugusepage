@@ -1,0 +1,21 @@
+Mandatory: true
+question:
+subquestion: |
+  testing testing
+  
+  Applicant | Name
+  ---|---
+  % for applicant in applicants:
+  Applicant ${nice_number(loop.index + 1, capitalize=True)}|${ applicant }| ${applicant}
+  % endfor
+---
+variable name: applicants
+useobjects: True
+data:
+   - Don Smith
+   - Sadia Arellano
+   - Mary Spence
+   - Saima Grant
+   - Jeff Richard
+   - Kiara Benton
+---

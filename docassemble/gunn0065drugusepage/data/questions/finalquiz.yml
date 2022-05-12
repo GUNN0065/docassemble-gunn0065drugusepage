@@ -1,0 +1,16 @@
+---
+Mandatory: true
+code: |
+  if parentIncome < 99536.00:
+    if 0 < childAge <= 12:
+      familyTaxAPayment = 5493.25
+    elif 13 <= childAge <= 15:
+      familyTaxAPayment = 5493.25
+    elif 16 <= childAge <= 19:
+      if not year12Complete:
+        familyTaxAPayment = 6927.70
+      else:
+        familyTaxAPayment = 0.00
+  else:
+    familyTaxAPayment = 0.00
+---

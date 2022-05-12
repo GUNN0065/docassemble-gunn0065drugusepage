@@ -1,0 +1,23 @@
+#third docassemble exercises
+Mandatory: True
+Question: Hello World
+Subquestion: |
+  #### This  is the title of this stupid program
+  
+  Today I learnt
+  
+  *things*
+  
+  **stuff**
+  > yeah
+  
+  I, **${ MGname }** am a fucking legend
+Buttons:
+  - I'm done: exit
+    url: https://www.bandcamp.com
+  - Do it again: restart
+---
+Question: Name
+Fields: 
+ - What is your name?: MGname
+---

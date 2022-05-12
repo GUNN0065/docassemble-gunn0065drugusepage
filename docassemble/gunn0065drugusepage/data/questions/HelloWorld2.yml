@@ -1,0 +1,16 @@
+---
+#we use variables such as this as because they can be different every time. MFJ is #added because it makes it easier to discern this variable from others. We will use lots of variables so adding a prefix to it makes it much easier
+# {} curly bracket [] square bracket () parenthesis
+# $ = Mako - this tells docassemble how to process a variable - When a Mako block is used, empty bucket searches for another block to fill the variable. In this case the mako block took us to the question name fields before it was able to take us to the page
+# ** = bold text
+Mandatory: True
+Question: Hello World!
+subquestion: |
+  Hello **${ MFJname }**, 
+  
+  Welcome to Docassemble
+---
+Question: Name
+Fields:
+ - What is your name?: MFJname
+---

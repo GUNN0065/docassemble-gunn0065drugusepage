@@ -1,0 +1,36 @@
+---
+question: Calculate income tax
+mandatory: True
+subquestion: |
+  The following code takes the user's income for the past financial year
+  and then calculates their income tax. It uses the following table:
+  
+  Taxable Income|Tax Payable
+  ---|---
+  $18,200 or less|0
+  $18,201 to 45,000|19 cents for every dollar over $18,200
+  $45,001 to $120,000|$5,092 plus 32.5 cents for every dollar over $45,000
+  $120,001 to $18,000|$29,467 plus 37 cents for every dollar over $120,000
+  $180,001 or more|$51,667 plus 45 cents for every dollar over $180,000
+  
+  Your income for 2021-2022 is ${userIncome}
+  
+  Your income tax for 2021-2022 is ${userIncomeTax}
+---
+question: What is your income?
+fields:
+  - no label: userIncome
+---
+code: |
+  if userIncome < 18200:
+    userIncomeTax = 0
+  else:
+    if userIncome > 18201 and userIncome <= 45000:
+      userIncomeTax = (userIncome - 18200) * 0.19
+    elif userIncome > 45001 and userIncome <= 120000:
+      userIncomeTax = 5092 + ((userIncome - 45000) * 0.325)
+    elif userIncome > 120001 and userIncome <= 180000
+      userIncomeTax = 29467 + ((userIncome - 120000) * 0.37)
+    elif userIncome > 180001:
+      userIncomeTax = 51667 + ((userIncome - 180000) * 0.45)
+---

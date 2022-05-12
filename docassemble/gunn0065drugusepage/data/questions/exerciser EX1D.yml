@@ -1,0 +1,38 @@
+mandatory: true
+Question: helloworld
+Subquestion: |
+
+  Why, hello there ${MGsalutation + ' ' + MGfirstname + ' ' + MGlastname}
+  
+  **it appears you have created a program from scratch**
+  
+  #it was pretty easy#
+  ##but it is going to get harder##
+  
+  here at the answers to the questions you asked 
+  
+    Column1|Column2
+  -------|-------
+  Salutation|${ MGsalutation }
+  First Name|${ MGfirstname }
+  Last Name|${ MGlastname }
+buttons:
+  - Fin: exit
+    url: https://library.flinders.edu.au/
+  - Lolz: exit
+    url: https://i.ytimg.com/vi/UKeI9bdB6Qg/maxresdefault.jpg
+  - Restart: restart
+---
+question: Name
+fields:
+  - salutation: MGsalutation
+    choices:
+      - Mr
+      - Mrs
+      - Ms
+      - Miss
+      - Dr
+      - Mx
+  - First Name: MGfirstname
+  - Last Name: MGlastname
+---

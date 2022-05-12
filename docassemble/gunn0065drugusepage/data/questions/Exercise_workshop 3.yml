@@ -1,0 +1,28 @@
+---
+Variable name: MGPatients
+use object: true
+data:
+  - name: Ida Noe
+    age: 35
+    consented: true
+  - name: Hugo First
+    age: 62
+    consented: True
+  - name: Moda Lawn
+    age: 27
+    consented: False
+  - name: Kate Jup
+    age: 52
+    consented: True
+  - name: Ayfor Gott
+    age: 72
+    consented: true
+  - name: Justin Tyme
+    age: 52
+    consented: true
+  - name: Ray Member
+    age: 36
+    consented: false
+  - name: Studie Harde
+    age: 52
+    consented: true

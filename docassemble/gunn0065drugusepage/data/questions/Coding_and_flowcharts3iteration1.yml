@@ -1,0 +1,16 @@
+---
+code: |
+  for MGa_service in MGservices:
+    # Criteria tests
+    if MGa_service['min_age'] <=MGage <= MGa_service['max_age']:
+      MGage_ok = True
+    else:
+      MGage_ok = False
+    
+    #eligibility test
+    if MGage_ok:
+      MGselected_services.append(MGa_service)
+      
+  MGselected_services.gathered = True
+---
+  

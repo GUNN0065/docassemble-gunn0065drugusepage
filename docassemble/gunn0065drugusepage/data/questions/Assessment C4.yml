@@ -1,0 +1,278 @@
+#this is telling docassemble to make a new list
+#gathers the content of the list 
+---
+objects: 
+  - MGselected_lawyers: DAList.using(there_are_any=True, auto_gather=False)
+---
+#mandatory block driving the application
+#better to have all of your logic in one mandatory block
+#involves separating the controller which manipulates the data *beyond what we cover in the topic*
+mandatory: True
+code: |
+  MGdisplay_welcome_screen
+  
+  MGdisplay_disclaimer_screen
+  
+  MGFinal_Screen
+---
+code: |
+  MGdisplay_welcome_screen = True
+  force_ask('MGWelcome_screen')
+---
+code: |
+  MGdisplay_disclaimer_screen = True
+  force_ask('MGDisclaimer_screen')
+---
+event: MGWelcome_screen
+question: Welcome!
+subquestion: |
+
+  **Welcome to the Family Law Lawyer Directory.**
+
+  This application has been developed to help you find and compare Family Law Lawyers in your area.
+
+
+
+  **Who We Are**
+  
+  The Family Law Pathways Network was established in 2003 by the Federal Government, in response to a need for information about family law services to be made available to as many people experiencing separation or engaging with the family law system as possible.
+
+  Funded by the Attorney General’s Department, the Family Law Pathways Network has developed into a coordinated network of professionals and agencies operating within the broader family law system in each State and Territory.
+
+  The overarching aim of the Network is to foster dialogue and collaboration between organisations and professionals to help separating and separated families access appropriate services. The Network encourages collaborative referrals, enhances understanding of available services, and represents an essential component of the Government’s wider commitment to an accessible justice system that meets the needs of Australian families.
+
+
+  The South Australian Family Law Pathways Network operates under the auspice agency of Relationships Australia SA. This Directory is owned by Relationships Australia SA, but operated entirely by the Senior Coordinator of the Family Law Pathways Network, South Australia.
+
+
+  All references to “Pathways” means Relationships Australia SA and Family Law Pathways Network, South Australia.
+  
+buttons:
+  - I want to continue: continue
+  - Exit: exit
+    url: https://lsc.sa.gov.au/
+---
+event: MGDisclaimer_screen
+question: Disclaimer
+subquestion: |
+  **Privacy Statement**
+  
+  Any information you provide when using this Directory will be used for the sole purpose of helping you find a suitable Family Law Lawyer. No information will be stored by Pathways, or shared with any third party.
+
+  **Disclaimer**
+
+   The Information contained in this Directory has been provided by the participating practicing lawyers and therefore, Pathways cannot guarantee the accuracy of any information provided and we make no claims as to the suitability of any lawyer for your particular needs. You should make your own enquiries about the accuracy of the information and the suitability of any lawyer. More information can be obtained from the lawyers themselves, or the The Law Society of South Australia. In addition, this Directory only provides details of participating lawyers. There may be other lawyers who might be suitable for your needs. The Law Society of South Australia has a referral service that can be accessed through its website or by phoning 8229 0200.
+
+  Pathways does not recommend any of the listed lawyers and are not liable for any issues arising from their engagement.
+
+  For further information, or if you have any questions, please call 08 8419 2000 or email Pathways@rasa.org.au
+
+  By clicking “Yes, I agree”, you are confirming that you have read and agree to our Privacy Statement and Disclaimer.
+buttons:
+  - Yes I agree: continue
+  - Exit: exit
+    url: https://lsc.sa.gov.au/
+---
+question: Location
+subquestion: |
+  Where are you located?
+fields:
+  - no label: MGlocation
+    datatype: checkboxes
+    choices:
+      - Adelaide Hills
+      - Barossa Light and Lower North
+      - Eastern Adelaide
+      - Eyre Western
+      - Far North
+      - Fleurieu and Kangaroo Island
+      - Limestone Coast
+      - Murray and Mailee
+      - Northern Adelaide
+      - Southern Adelaide
+      - Western Adelaide
+      - York and Mid North
+---
+question: Affordability
+fields:
+  - How much are you willing to pay?: MGaffordability
+    datatype: currency
+---
+question: Language
+fields:
+  - Do you need a lawyer who speaks a different language?: MGesl_true
+    datatype: yesno
+---
+#signals when *this* is fired *do this*
+event: MGFinal_Screen
+#signals when...
+question: Final Screen
+subquestion: |
+  You selected the following values:
+  
+  Question|Answer
+  ---|---
+  Location|${MGlocation.true_values()}
+  
+  %for MGLawyer in MGselected_lawyers:
+  * ${MGLawyer['lawyer']}
+  * ${MGLawyer['law_firm']}
+  %endfor
+---
+code: |
+  for lawyer in FLPN2_lawyerlist:
+    MGlocation_ok = False
+    for MGalocation in MGlocation.true_values():
+      if MGalocation in lawyer['service_area']:
+        MGlocation_ok = True
+        
+    if MGlocation_ok:
+      MGselected_lawyers.append(lawyer)
+  MGselected_lawyers.gathered=True
+---
+# All Lawyers are alphabetically listed
+# Your code needs to cycle through this list
+# and add any lawyers which match the criteria
+# your user has entered.
+variable name: FLPN2_lawyerlist
+use objects: true
+data:
+  - lawyer: Kate Annells
+    law_firm: Annells Lawyers
+    address: 256 Commercial Street, West Mount Gambier, SA 5290
+    email: annellslaw@gmail.com
+    phone: 08 8723 3212
+    website: http://www.annellslawyers.com.au
+    fees_per_hour: 418
+    service_area:
+        - Limestone Coast
+    language: false
+  - lawyer: Kerry Antoniou
+    law_firm: Alpha Family Lawyers
+    address: Level 3, 97 Pirie Street, Adelaide, South Australia 5000
+    email: contact@alphafamilylawyers.com.au
+    phone: 08 7129 4411
+    website: https://www.alphafamilylawyers.com.au
+    fees_per_hour: 550
+    service_area:
+        - Eastern Adelaide
+    language: true
+  - lawyer: Sophie Bell
+    law_firm: BBS Lawyers
+    address: Level 4, 420 King Williams Street, Adelaide, SA 5000
+    email: admin@bbslawyers.com.au
+    phone: 08 8110 2300
+    website: https://bbslawyers.com.au/
+    fees_per_hour: 418
+    service_area:
+      - Eastern Adelaide
+    language: false
+  - lawyer: Madeleine Betro
+    law_firm: Stanley & Co
+    address: 75 Angas Street, Adelaide, South Australia 5000
+    email: madeleine@stanlaw.com.au
+    phone: 08 7001 6135
+    website: https://www.stanlaw.com.au/
+    fees_per_hour: 429
+    service_area:
+      - Eastern Adelaide
+      - Southern Adelaide
+    language: false
+  - lawyer: Brittany Carmody
+    law_firm: Family Violence Legal Service Aboriginal Corporation SA
+    address: 89 Liverpool Street, Port Lincoln, South Australia 5606
+    email: portlincoln@fvlsac.org.au
+    phone: 08 8683 1896
+    website: http://www.fvlsac.org.au/
+    fees_per_hour: 0
+    service_area:
+        - Eyre Western
+        - Far North
+    language: false
+  - lawyer: Annette Comley
+    law_firm: Comley Legal
+    address: 146 Gilles Street, Adelaide, South Australia 5000
+    email: admin@comleylegal.com.au
+    phone: 08 7226 5051
+    website: https://comleylegal.com.au
+    fees_per_hour: 420
+    service_area:
+      - Eastern Adelaide
+    language: false
+  - lawyer: Jeremy Culshaw
+    law_firm: Culshaw Miller Lawyers 
+    address: 49 Hindmarsh Square, Adelaide, South Australia 5000
+    email: jeremy.culshaw@culshawmiller.com.au
+    phone: Landline 08 8464 0033 Mobile 0411 698 475
+    website: https://www.culshawmiller.com.au
+    fees_per_hour: 440
+    service_area:
+      - Eastern Adelaide
+    language: false
+  - lawyer: Linda Gross
+    law_firm: L.G. Lawyers
+    address: 3/10 Gawler Street, Mount Barker, South Australia 5251
+    email: admin@lglawyers.com.au
+    phone: 0414 825 555
+    website: https://www.lglawyers.com.au
+    fees_per_hour: 440
+    service_area:
+      - Adelaide Hills
+    language: false
+  - lawyer: Sam Lehman
+    law_firm: Culshaw Miller Lawyers
+    address: 49 Hindmarsh Square, Adelaide, South Australia 5000
+    email: sam.lehman@culshawmiller.com.au
+    phone: 08 8464 0033
+    website: https://www.culshawmiller.com.au
+    fees_per_hour: 418
+    service_area:
+      - Eastern Adelaide
+    language: false
+  - lawyer: Julia Lloyd
+    law_firm: Teusner & Co.
+    address: 4 Elizabeth Street, Tanunda South, Australia 5352
+    email: office@teusnerlaw.com.au
+    phone: 08 8563 2627
+    website: https://www.teusnerlaw.com.au
+    fees_per_hour: 440
+    service_area:
+        - Barossa Light and Lower North
+        - Fleurieu and Kangaroo Island
+    language: false
+  - lawyer: Sam Ngai
+    law_firm: Scammell & Co.
+    address: 86 Franklin Street, Adelaide, South Australia 5000
+    email: sngai@scammell.com.au
+    phone: 08 8212 6875
+    website: https://www.scammell.com.au
+    fees_per_hour: 462
+    service_area:
+      - Adelaide Hills
+      - Eastern Adelaide
+      - Northern Adelaide
+      - Southern Adelaide
+      - Western Adelaide
+    language: true
+  - lawyer: Amra Sabou
+    law_firm: Stanley & Co
+    address: 75 Angas Street, Adelaide, South Australia 5000
+    email: amra@stanlaw.com.au
+    phone: 08 7001 6135
+    website: https://www.stanlaw.com.au/
+    fees_per_hour: 462
+    service_area:
+      - Eastern Adelaide
+      - Southern Adelaide
+    language: false
+  - lawyer: Larissa Stevens
+    law_firm: Stevens Law
+    address: Level 4, 195 Victoria Square, Adelaide, South Australia 5000
+    email: larisda@stevenslaw.com.au
+    phone: 08 8470 0313
+    website: https://www.stevenslaw.com.au
+    fees_per_hour: 400
+    service_area:
+      - Eastern Adelaide
+    language: false
+---

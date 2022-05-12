@@ -1,0 +1,45 @@
+#In this video we will do three things: add exit and restart buttons - more markdown - make code easier to read
+# the number of hashes indicates the level of heading
+# Make sure there is a space when creating bullet lists 
+# #'s control the size of a heading
+# My first Docassemble program
+#more sophisticated MAKO a + joins ' ' quote space quote tells markdown to treat a space as a space and not code
+mandatory: True
+question: Hello World!
+subquestion: |
+  ### Welcome to Docassemble!
+
+  Dear ${ MJFsalutation + ' ' + MJFlastname },
+
+  This is a quick introduction to Markdown.
+
+  Two lines for a line break
+  because a single line doesn't break at all.
+
+  - Here's a list
+  - with some items
+  - in it
+
+  **Here's some bold text** and *text in italics*.
+
+  Column1|Column2
+  -------|-------
+  Salutation|${ MJFsalutation }
+  First Name|${ MJFfirstname }
+  Last Name|${ MJFlastname }
+buttons:
+  - I'm done: exit
+    url: https://flinders.edu.au
+  - Do it again: restart
+---
+question: Name
+fields:
+  - Salutation: MJFsalutation
+    choices:
+      - Dr
+      - Mr
+      - Mrs
+      - Ms
+  - First Name: MJFfirstname
+  - Last Name: MJFlastname
+---

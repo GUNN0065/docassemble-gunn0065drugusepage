@@ -1,0 +1,31 @@
+mandatory: true
+question: Duty Solicitor List
+subquestion: |
+  ### Duty Solicitor's list
+  
+  Category value
+  ---|---
+  %for MGdsl in MGdsl_info:
+  ${ MGkey } |${MGdsl_info[MGkey]}
+  %endfor
+---
+variable name: MGdsl
+use objects: True
+data: 
+    - name: Tim Shaw 
+      offence:
+          - Speeding
+          - Driving without a Licence
+    - name: Steven Strange
+      offence:
+          - Dangerous Driving
+    - name: Chelsea Manning
+      offence:
+          - Possession of computer viruses with intent to commit serious computer offence
+          - Unauthorised modification of computer data
+---
+code: |
+  MGdsl_info = {
+    'Name': 'Tim Shaw'
+    'Offences': 'Speeding', 'Driving Without a Licence'
+   }

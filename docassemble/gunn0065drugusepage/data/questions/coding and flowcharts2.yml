@@ -1,0 +1,36 @@
+---
+question: what is your age?
+fields:
+  - no label: MGage
+    datatype: integer
+---
+question: what is your gender?
+fields:
+  - no label: MGgender
+    datatype: radio
+    choices:
+      - Male
+      - Female
+---
+question: Are you looking for accomodation for yourself or for your  family?
+fields:
+  - no label: MGfamily
+    datatype: radio
+    choices:
+      - I am seeking accomodation for my family: family
+      - I am seeking accomodation only for myself: single
+---
+question: Location
+subquestion: |
+  Please select the location/locations in which you are looking for services.
+  
+  You may select more than one location.
+fields:
+  - no label: MGlocation
+    datatype: checkboxes
+    choices:
+      - North
+      - South
+      - East
+      - West
+---

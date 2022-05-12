@@ -1,0 +1,43 @@
+---
+variable name: servicesList
+use objects: True
+data: 
+    - name: CBS Services
+      min_age: 18
+      max_age: 65
+      gender: all
+    - name: Police Youth Club
+      min_age: 15
+      max_age: 40
+      gender: all
+    - name: St Vincent De Pauls
+      min_age: 18
+      max_age: 72
+      gender: men only
+    - name: Colony 47
+      min_age: 9
+      max_age: 72
+      gender: women only
+---
+mandatory: True
+question: Services that are available
+subquestion: |
+    The following services are available to you:
+    
+    % for service in servicesList:
+    % if gendersSelected[service['gender']]:
+    * ${ service['name'] }
+    % endif
+    % endfor
+---
+question: |
+  Please enter the gender for the services you need
+fields:
+  - "Which services do you want?": gendersSelected
+    datatype: checkboxes
+    choices:
+    - Men Only: men only
+    - Women Only: women only
+    - All Genders: all
+    none of the above: False
+---

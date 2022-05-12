@@ -1,0 +1,28 @@
+#In this video we will do three things: add exit and restart buttons - more markdown - make code easier to read
+# the number of hashes indicates the level of heading
+# Make sure there is a space when creating bullet lists 
+# #'s control the size of a heading
+Mandatory: True
+Question: Hello World!
+subquestion: |
+
+  #### Welcome to my first ever Docassemble interview
+  
+  Today I learnt:
+  
+  - what a mandatory code block is;
+  - how to use a variable; and
+  - a *little bit* of markdown
+  
+  I, **${ MJFname }**, am pretty happy with myself!
+buttons:
+  - I'm done: exit
+    url: https://www.facebook.com/photo/?fbid=10226923811746991&set=a.3287862881114
+  - Moar: restart
+---
+Question: Name
+Subquestion: |
+  Please enter your full name, including your middle name if you have one
+Fields:
+ - no label: MJFname
+---
